@@ -1,5 +1,4 @@
 import os
-from h5py._hl import dataset
 
 import numpy as np
 from sklearn.utils import validation
