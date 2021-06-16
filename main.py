@@ -162,7 +162,7 @@ if __name__ == '__main__':
     split_testval_ratio = 0.5
     
     model_spec = 'efficientnet_lite0' # 'efficientnet_lite0-4 'mobilenet_v2' 'resnet_50'
-    epochs = 10
+    epochs = 2
     dropout_rate = 0.5
     learning_rate = None
     shuffle = True
@@ -182,14 +182,18 @@ if __name__ == '__main__':
         model_spec=model_spec, 
         epochs=epochs,
         batch_size=batch_size,
+        do_train=True
         )
-    
+    model.train( train_data, validation_data, hparams=None)
     model.summary()
 
     # Evaluate model
     loss, accuracy = evaluate_model(test_data=test_data, model=model)
 
     #plot classified pictures "Manual checking"
+    xx = model.train(train_data)
+    xx.history
+    print(xx.history)
     #model.predict_top_k(test_data)
     #test_data
     #plot_classified_images(model=model, test_data=test_data)
