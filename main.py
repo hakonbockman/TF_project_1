@@ -1,24 +1,14 @@
-import os
-
-import numpy as np
-from sklearn.utils import validation
 
 import tensorflow as tf
-from tensorflow_examples.lite.model_maker.core.data_util.image_dataloader import ImageClassifierDataLoader
-from tensorflow_examples.lite.model_maker.core.task.image_classifier import ImageClassifier
-import tensorflow_hub as hub
-from tensorflow_examples.lite.model_maker.core import export_format
-from tensorflow_hub.tools.make_image_classifier.make_image_classifier_lib import make_image_classifier
 assert tf.__version__.startswith('2')
 
 from tflite_model_maker import model_spec
 from tflite_model_maker import image_classifier
 from tflite_model_maker.config import ExportFormat
-from tflite_model_maker.config import QuantizationConfig
 from tflite_model_maker.image_classifier import DataLoader
-from tflite_model_maker.image_classifier import ModelSpec
 
 import matplotlib.pyplot as plt
+
 
 
 # LOAD
@@ -158,15 +148,24 @@ def draw_learning_curves(model):
 if __name__ == '__main__':
 
     path = '../saue bilder/Combined/Visual_originale/'
+    path_2 = '/mnt/GigaServer1/Haakosbo/bilder/Visual_originale/'
+    path_3 = '../Visual_originale/'
+    path_4 = '../saue bilder/Combined/Visual/'
+
+    path = path_4
+
+
     split_trainrest_ratio = 0.8
     split_testval_ratio = 0.5
     
-    model_spec = 'efficientnet_lite0' # 'efficientnet_lite0-4 'mobilenet_v2' 'resnet_50'
-    epochs = 10
+    model_spec = 'efficientnet_lite4' # 'efficientnet_lite0-4 'mobilenet_v2' 'resnet_50'
+    epochs = 300
     dropout_rate = 0.5
     learning_rate = None
     shuffle = True
     batch_size = None
+    use_augmentation = True
+    train_whole_model = True
 
     # Load Data
     train_data, test_data, validation_data = load_data_tflite_model_maker(path, split_trainrest_ratio, split_testval_ratio)
@@ -182,6 +181,8 @@ if __name__ == '__main__':
         model_spec=model_spec, 
         epochs=epochs,
         batch_size=batch_size,
+        use_augmentation=use_augmentation,
+        train_whole_model=train_whole_model,
         )
     
     model.summary()
@@ -201,10 +202,10 @@ if __name__ == '__main__':
         label_filename='classification_labels', 
         overwrite=True,
         export_format=ExportFormat.SAVED_MODEL,
-        save_model_filename=str('tflite_' + model_spec + '_model_saved')
+        save_model_filename=str('tflite_model_saved')
 
         )
-    draw_learning_curves(model)
+    #draw_learning_curves(model)
 
     print("done done")
     quit()
@@ -222,6 +223,21 @@ if __name__ == '__main__':
 
 
     ''' GRAVEYARD 
+
+
+#from tensorflow_examples.lite.model_maker.core.data_util.image_dataloader import ImageClassifierDataLoader
+#from tensorflow_examples.lite.model_maker.core.task.image_classifier import ImageClassifier
+#import tensorflow_hub as hub
+#from tensorflow_examples.lite.model_maker.core import export_format
+#from tensorflow_hub.tools.make_image_classifier.make_image_classifier_lib import make_image_classifier
+#from tflite_model_maker.image_classifier import ModelSpec
+#from tflite_model_maker.config import QuantizationConfig
+#import os
+#import numpy as np
+#from sklearn.utils import validation
+
+
+
  def build_model(train_data, validation_data, model_spec='efficientnet_lite0', epochs=5, do_fine_tuning=False, 
         batch_size=32, learning_rate=0.005, momentum=0.9, dropout_rate=0.2, l1_regularizer=0.0, l2_regularizer=0.0001,
         label_smoothing=0.1, validation_split=0.2, do_data_augmentation=False, rotation_range=40, horizontal_flip=True, 
