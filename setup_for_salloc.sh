@@ -1,22 +1,19 @@
 #!/bin/bash
-
-
 module purge 
+##module load GCC/10.2.0 #GCC/8.3.0 
+##module load CUDA/11.1.1-GCC-10.2.0 #CUDA/10.1.243 
+##module load OpenMPI/4.0.5-GCC-10.2.0 #OpenMPI/3.1.4 
+##module load cuDNN/8.0.4.30-CUDA-11.1.1 #cuDNN/7.6.4.38 
+##module load Python/3.8.6-GCCcore-10.2.0 #Python/3.7.4 
 
-#module load GCC/10.2.0 #GCC/8.3.0 
-#module load CUDA/11.1.1-GCC-10.2.0 #CUDA/10.1.243 
-#module load OpenMPI/4.0.5-GCC-10.2.0 #OpenMPI/3.1.4 
-#module load cuDNN/8.0.4.30-CUDA-11.1.1 #cuDNN/7.6.4.38 
-#module load Python/3.8.6-GCCcore-10.2.0 #Python/3.7.4 
-
-#module load GCC/10.2.0
-#module load CUDA/11.1.1-GCC-10.2.0
-#module load OpenMPI/4.0.5-GCC-10.2.0 
-#module load cuDNN/8.0.4.30-CUDA-11.1.1
-#module load Python/3.8.6-GCCcore-10.2.0
+##module load GCC/10.2.0
+##module load CUDA/11.1.1-GCC-10.2.0
+##module load OpenMPI/4.0.5-GCC-10.2.0 
+##module load cuDNN/8.0.4.30-CUDA-11.1.1
+##module load Python/3.8.6-GCCcore-10.2.0
 
 module list
-module restore new_module_list
+module restore cuDNN804_CUDA1111_Py386_GCC1020
 module list
 echo "Modules loaded"
 
@@ -35,4 +32,6 @@ pip install tensorflow-gpu --no-cache-dir #==2.3.0 --no-cache-dir       #//Tenso
 
 echo "Now the Modules, Virtual Environment and Packages are loaded in"
 
-python /cluster/work/haakosbo/TF_project_1/main.py
+cd /cluster/work/haakosbo/TF_project_1/
+
+python main.py

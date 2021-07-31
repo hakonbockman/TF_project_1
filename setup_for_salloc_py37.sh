@@ -21,7 +21,7 @@ module purge
 #module load Python/3.7.4
 
 module load gcccuda/2020b
-
+module load Python/3.8.6-GCCcore-10.2.0
 module list
 echo "Modules loaded"
 
