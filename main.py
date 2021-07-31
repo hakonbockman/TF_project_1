@@ -119,6 +119,7 @@ def alternative_evaluation_tflite_mode(model, test_data):
     model.evaluate_tflite('model.tflite', test_data)
 
 
+
 # Load
 #module_spec = hub.load_module_spec("./model_files/")
 #height, width = hub.get_expected_image_size(module_spec)
@@ -147,25 +148,28 @@ def draw_learning_curves(model):
 
 if __name__ == '__main__':
 
+    path_ir = '../saue bilder/Combined/IR_originale/'
+
     path = '../saue bilder/Combined/Visual_originale/'
     path_2 = '/mnt/GigaServer1/Haakosbo/bilder/Visual_originale/'
     path_3 = '../Visual_originale/'
     path_4 = '../saue bilder/Combined/Visual/'
 
-    path = path_4
+    path = path
 
+    #tf.compat.v1.image.crop_and_resize
 
     split_trainrest_ratio = 0.8
     split_testval_ratio = 0.5
     
     model_spec = 'efficientnet_lite4' # 'efficientnet_lite0-4 'mobilenet_v2' 'resnet_50'
-    epochs = 300
+    epochs = 2
     dropout_rate = 0.5
     learning_rate = None
     shuffle = True
     batch_size = None
     use_augmentation = True
-    train_whole_model = True
+    train_whole_model = False
 
     # Load Data
     train_data, test_data, validation_data = load_data_tflite_model_maker(path, split_trainrest_ratio, split_testval_ratio)
@@ -184,7 +188,7 @@ if __name__ == '__main__':
         use_augmentation=use_augmentation,
         train_whole_model=train_whole_model,
         )
-    model.train( train_data, validation_data, hparams=None)
+    #model.train( train_data, validation_data, hparams=None)
     model.summary()
 
     # Evaluate model
@@ -194,9 +198,9 @@ if __name__ == '__main__':
     xx = model.train(train_data)
     xx.history
     print(xx.history)
-    #model.predict_top_k(test_data)
+    model.predict_top_k(test_data)
     #test_data
-    #plot_classified_images(model=model, test_data=test_data)
+    plot_classified_images(model=model, test_data=test_data)
 
     # Export model
     export_model(
